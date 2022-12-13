@@ -10,43 +10,32 @@ function initBoth(){
     let length = prices.length -1;
     
 
-
-
-
-// Function to solve the cut-rod with fixed cut cost problem using recursive memorization
 function cutRod(p, n, c, memo) {
-    // If the length of the rod is 0 or the price array is empty, return 0
-    if (n === 0 || p.length === 0) return 0;
   
-    // If the memo array already has a value for the current length of the rod, return it
+    if (n === 0 || p.length === 0) return 0;
+    
     if (memo[n] !== undefined) return memo[n];
 
     let cuts = new Array();
-  
-    // Initialize the maximum revenue to the revenue from not cutting the rod
+    
     let maxRevenue = p[n];
-  
-    // Loop through all possible cuts of the rod
+    
     for (let i = 1; i < n; i++) {
-      // Calculate the revenue from cutting the rod at the current point, taking into account the fixed cost of making a cut
+    
       let revenue = cutRod(p, i, c, memo) + cutRod(p, n - i, c, memo) - c;
-      // Update the maximum revenue if the current revenue is greater
+  
       if (maxRevenue < revenue) {
         maxRevenue = revenue
         cuts.push(i);
       }
     }
   
-    // Store the maximum revenue in the memo array and return it
     return {maxValue: memo[n] = maxRevenue,
             optSol: defineCut(cuts,n),
     };
   }
   
- 
-
-
-  // Example usage
+  
   let memo = new Array(length + 1);
   let startTime = performance.now();
   
@@ -56,8 +45,8 @@ function cutRod(p, n, c, memo) {
 
   let endTime = performance.now();
   let recursiveTime = endTime - startTime;
-  console.log(`Tempo Passado com recursividade: ${recursiveTime / 1000} segundos`); // Prints the number of seconds
-
+  console.log(`Tempo Passado com recursividade: ${recursiveTime / 1000} segundos`); 
+  
 
 // ------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
@@ -65,32 +54,29 @@ function cutRod(p, n, c, memo) {
 // ------------------------------------------------------------------------------------
 
 function cutRodInteraction(length, prices, cost) {
-    // Create an array to store the maximum profit for each length of rod
+  
     let maxProfits = new Array(length + 1).fill(0);
     let cuts = new Array(length);
   
-    // Loop through each possible length of rod
+    
     for (let i = 1; i <= length; i++) {
-      // Set the maximum profit for the current length to the profit of the first cut
+      
       let maxProfit = prices[i];
-  
-      // Loop through each possible first cut
+    
       for (let j = 1; j < i; j++) {
-        // Calculate the maximum profit by making a first cut at j and then cutting the remaining piece optimally
+      
         let profit = maxProfits[j] + prices[i - j] - cost;
   
-        // Update the maximum profit if the current profit is higher
         if (profit > maxProfit) {
           maxProfit = profit;
           cuts[j] = i-j;
         }
       }
-  
-      // Store the maximum profit for the current length
+      
       maxProfits[i] = maxProfit;
     }
   
-    // Return the maximum profit for the given length of rod
+    
    
   
     return {maxValue: maxProfits[length],
@@ -116,8 +102,8 @@ function cutRodInteraction(length, prices, cost) {
   valorMax.optSol = maxRevenue.optSol
   let tempoFinal = performance.now();
   let interativeTime = tempoFinal - TempoInicial;
-  console.log(`Tempo Passado interativo: ${interativeTime/1000} segundos`);  // Prints the number of seconds
-
+  console.log(`Tempo Passado interativo: ${interativeTime/1000} segundos`); 
+  
 
   dataArray = [...dataArray ,[
     {
